@@ -1,0 +1,21 @@
+shape: sequence_diagram
+
+# Definição opcional de atores para organizar a ordem de exibição
+PC
+ESP32
+Celular
+LEDs
+
+PC -> ESP32: Programa o firmware (USB)
+
+ESP32 -> ESP32: Inicializa modo Hotspot Wi-Fi
+
+Celular -> ESP32: Conecta à rede Wi-Fi do ESP32
+
+Celular -> ESP32: Envia requisição com a conta a ser feita
+
+ESP32 -> ESP32: Processa o cálculo matemático
+
+ESP32 -> LEDs: Resultado nos LEDs (Binário)
+
+ESP32 -> Celular: Retorna resposta da operação\n(Resultado (LEDs e decimal), Sinal de Overflow)
