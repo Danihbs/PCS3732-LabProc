@@ -248,6 +248,7 @@ bool isBinary4(String value) {
 }
 
 // Converte uma string de 4 bits em inteiro com complemento de dois.
+
 int bin4ToSignedInt(String bin) {
   int unsignedValue = 0;
 
@@ -263,6 +264,7 @@ int bin4ToSignedInt(String bin) {
 }
 
 // Converte os 4 bits menos significativos para string binária.
+
 String toBinary4(int value) {
   uint8_t bits = value & 0x0F;
   String out = "";
@@ -285,6 +287,7 @@ void writeLeds4Bits(int value) {
   }
 }
 
+// Apaga todos os LEDs.
 void clearLeds() {
   for (int i = 0; i < 4; i++) {
     digitalWrite(ledPins[i], LED_OFF);
@@ -404,7 +407,6 @@ void setup() {
   }
   clearLeds();
 
-  // Modo hotspot: a ESP32 cria a própria rede.
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid, password);
 
