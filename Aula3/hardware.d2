@@ -1,0 +1,46 @@
+direction: right
+
+# Dispositivos de Controle
+Celular: Smartphone
+PC: Computador
+
+# Microcontrolador
+ESP32: ESP32
+
+# Container dos LEDs para mantê-los alinhados
+LEDs: {
+  style: {
+    fill: transparent
+    stroke: transparent
+  }
+
+  LED1: LED 1 { shape: cylinder }
+  LED2: LED 2 { shape: cylinder }
+  LED3: LED 3 { shape: cylinder }
+  LED4: LED 4 { shape: cylinder }
+  LED5: LED 5 { shape: cylinder }
+}
+
+# Conexão Sem Fio
+Celular -> ESP32: Wi-Fi {
+  style: {
+    stroke-dash: 5
+    stroke: blue
+    stroke-width: 2
+  }
+}
+
+# Conexão Física USB
+PC -> ESP32: USB {
+  style: {
+    stroke-dash: 5
+    stroke-width: 2
+  }
+}
+
+# Conexões GPIO (Linhas)
+ESP32 -> LEDs.LED1: GPIO 04
+ESP32 -> LEDs.LED2: GPIO 05
+ESP32 -> LEDs.LED3: GPIO 06
+ESP32 -> LEDs.LED4: GPIO 07
+ESP32 -> LEDs.LED5: GPIO 08
