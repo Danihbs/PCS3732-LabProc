@@ -19,13 +19,13 @@
 #include <WebServer.h>
 #include <stdint.h>
 
-const char* ssid = "Calculadora_ESP32";
-const char* password = "12345678";
+const char* ssid = "Calculadora_Do_Daniel";
+const char* password = "12345meia";
 
 WebServer server(80);
 
 // Para ESP32 DevKit comum. Altere se sua montagem usar outros pinos.
-const int ledPins[4] = {26, 27, 25, 33}; // bit0, bit1, bit2, bit3
+const int ledPins[4] = {1, 2, 3, 4};
 const int LED_ON = HIGH;
 const int LED_OFF = LOW;
 
