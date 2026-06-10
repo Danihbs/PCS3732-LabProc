@@ -1,20 +1,17 @@
-#define LED_PIN 4
+#include <ESP32Servo.h>
 
-const int freq = 5000;
-const int resolucao = 8;
+Servo meuServo;
+
+const int pinoServo = 4;
 
 void setup() {
-  ledcAttach(LED_PIN, freq, resolucao);
+  meuServo.setPeriodHertz(50);
+  meuServo.attach(pinoServo, 500, 2400);
 }
 
 void loop() {
-  for (int brilho = 0; brilho <= 255; brilho++) {
-    ledcWrite(LED_PIN, brilho);
-    delay(10);
-  }
-
-  for (int brilho = 255; brilho >= 0; brilho--) {
-    ledcWrite(LED_PIN, brilho);
-    delay(10);
-  }
+  meuServo.write(90);
+  delay(1000);
+  meuServo.write(0);
+  delay(1000);
 }

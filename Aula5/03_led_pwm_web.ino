@@ -1,21 +1,29 @@
 #include <WiFi.h>
 #include <WebServer.h>
+#include <ESP32Servo.h>
 
-#define LED_PIN 4
+const int pinoServo = 4;
+const int freqServo = 50;
+const char* ssid = "ESP32_SERVO_do_Tulio";
+const char* password = "12345meia";
 
-const char* ssid = "ESP32_PWM_LED";
-const char* password = "12345678";
-
+Servo meuServo;
 WebServer server(80);
 
-int brilho = 128;
-int frequencia = 5000;
-const int resolucao = 8;
+int angulo = 90;
 
-void atualizarPWM() {
-  ledcDetach(LED_PIN);
-  ledcAttach(LED_PIN, frequencia, resolucao);
-  ledcWrite(LED_PIN, brilho);
+void moverServo(int novoAngulo) {
+  if (novoAngulo < 0) {
+    novoAngulo = 0;
+  }
+
+  if (novoAngulo > 180) {
+    novoAngulo = 180;
+  }
+
+  angulo = novoAngulo;
+
+  meuServo.write(angulo);
 }
 
 String paginaHTML() {
@@ -23,18 +31,16 @@ String paginaHTML() {
 
   html += "<!DOCTYPE html><html>";
   html += "<head><meta name='viewport' content='width=device-width, initial-scale=1'>";
-  html += "<title>Controle LED PWM</title></head>";
+  html += "<title>Controle Servo</title></head>";
   html += "<body>";
-  html += "<h2>Controle de LED com PWM</h2>";
+  html += "<h2>Controle de Servo com PWM</h2>";
 
   html += "<form action='/set' method='GET'>";
-  html += "Brilho: <input type='range' name='brilho' min='0' max='255' value='" + String(brilho) + "'><br><br>";
-  html += "Frequencia: <input type='number' name='freq' value='" + String(frequencia) + "'><br><br>";
-  html += "<input type='submit' value='Atualizar'>";
+  html += "Angulo: <input type='range' name='angulo' min='0' max='180' value='" + String(angulo) + "'><br><br>";
+  html += "<input type='submit' value='Mover'>";
   html += "</form>";
 
-  html += "<p>Brilho atual: " + String(brilho) + "</p>";
-  html += "<p>Frequencia atual: " + String(frequencia) + " Hz</p>";
+  html += "<p>Angulo atual: " + String(angulo) + " graus</p>";
 
   html += "</body></html>";
 
@@ -46,23 +52,9 @@ void handleRoot() {
 }
 
 void handleSet() {
-  if (server.hasArg("brilho")) {
-    brilho = server.arg("brilho").toInt();
+  if (server.hasArg("angulo")) {
+    moverServo(server.arg("angulo").toInt());
   }
-
-  if (server.hasArg("freq")) {
-    frequencia = server.arg("freq").toInt();
-  }
-
-  if (frequencia < 100) {
-    frequencia = 100;
-  }
-
-  if (frequencia > 20000) {
-    frequencia = 20000;
-  }
-
-  atualizarPWM();
 
   server.send(200, "text/html", paginaHTML());
 }
@@ -70,8 +62,9 @@ void handleSet() {
 void setup() {
   Serial.begin(115200);
 
-  ledcAttach(LED_PIN, frequencia, resolucao);
-  ledcWrite(LED_PIN, brilho);
+  meuServo.setPeriodHertz(freqServo);
+  meuServo.attach(pinoServo, 500, 2400);
+  meuServo.write(0);
 
   WiFi.softAP(ssid, password);
 
