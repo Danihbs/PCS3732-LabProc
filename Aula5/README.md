@@ -53,18 +53,15 @@ O sistema deve permitir alterar a posição do servomotor pela interface web.
 https://github.com/user-attachments/assets/f0b1d99f-68a1-4082-b282-956b18943844
 
 ---
- Faça uma implementação integrada que consegue controlar o LED externo e o servomotor a partir de uma única interface web.
 ### RF4 - Implementação integrada
 
 O sistema deve permitir alterar a posição do servomotor além da intensidade e frequência do led pela mesma interface web.
 
 **Teste realizado:** mover o slider do servo para 0°, 90° e 180°, alterar a frequência entre diferentes valores, como 50 Hz, 1000 Hz e 5000 Hz e alterar o slider de brilho entre 0%, 50% e 100%.
 
-**Resultado esperado:** o servomotor deve se mover para posições próximas aos ângulos definidos.
-
+**Resultado esperado:** o servomotor deve se mover para posições próximas aos ângulos definidos e o led deve alterar seu brilho e frequência conforme os valroes especificados
 **Vídeo de demonstração:**
 
-https://github.com/user-attachments/assets/f0b1d99f-68a1-4082-b282-956b18943844
 
 
 ---
