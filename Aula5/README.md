@@ -1,6 +1,3 @@
-
-
-
 # Lab 5 - Controle de Periféricos com PWM e ESP32-C3
 
 Este repositório contém os códigos desenvolvidos para o experimento de controle de intensidade de LED e posição de servomotor usando PWM no ESP32-C3, com interação por meio de uma interface web local.
@@ -65,7 +62,7 @@ O sistema deve permitir alterar a posição do servomotor além da intensidade e
 
 **Vídeo de demonstração:**
 
-
+https://github.com/user-attachments/assets/ee7ff6c4-e970-4345-afbc-c64548f385c8
 
 ---
 
