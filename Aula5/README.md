@@ -81,10 +81,6 @@ A interface deve ser simples e acessível por navegador, sem necessidade de apli
 
 ---
 
-https://github.com/user-attachments/assets/bf2e30b3-ddf4-4bb6-9e10-191e2277455a
-
-
-
 ### RNF2 - Desempenho
 
 O sistema deve responder aos comandos da interface em tempo adequado, sem atraso perceptível durante o uso normal.
