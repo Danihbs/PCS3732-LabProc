@@ -44,13 +44,15 @@ https://github.com/user-attachments/assets/fc9b0b19-1ecd-4cd7-9128-3ebc9658f19e
 
 O sistema deve permitir alterar a posição do servomotor pela interface web.
 
-**Teste realizado:** mover o slider do servo para 0°, 90° e 180°.
+**Teste realizado:** mover o slider do servo para 0° e 90°
 
 **Resultado esperado:** o servomotor deve se mover para posições próximas aos ângulos definidos.
 
 **Vídeo de demonstração:**
 
 https://github.com/user-attachments/assets/f0b1d99f-68a1-4082-b282-956b18943844
+
+https://github.com/user-attachments/assets/0c6af831-9e14-49b6-8ea9-542ba8789e96
 
 ---
 ### RF4 - Implementação integrada
@@ -60,6 +62,7 @@ O sistema deve permitir alterar a posição do servomotor além da intensidade e
 **Teste realizado:** mover o slider do servo para 0°, 90° e 180°, alterar a frequência entre diferentes valores, como 50 Hz, 1000 Hz e 5000 Hz e alterar o slider de brilho entre 0%, 50% e 100%.
 
 **Resultado esperado:** o servomotor deve se mover para posições próximas aos ângulos definidos e o led deve alterar seu brilho e frequência conforme os valroes especificados
+
 **Vídeo de demonstração:**
 
 
@@ -77,6 +80,10 @@ A interface deve ser simples e acessível por navegador, sem necessidade de apli
 **Demonstrado nos vídeos anteriores**
 
 ---
+
+https://github.com/user-attachments/assets/bf2e30b3-ddf4-4bb6-9e10-191e2277455a
+
+
 
 ### RNF2 - Desempenho
 
