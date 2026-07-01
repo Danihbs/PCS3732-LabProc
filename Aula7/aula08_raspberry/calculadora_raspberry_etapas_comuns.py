@@ -10,8 +10,20 @@ def ler_inteiro(mensagem):
             print("Entrada inválida.")
 
 
-def limite_por_bits(bits):
-    return (2 ** bits) - 1
+def limite_com_sinal(bits):
+    minimo = -(2 ** (bits - 1))
+    maximo = (2 ** (bits - 1)) - 1
+    return minimo, maximo
+
+
+def tem_overflow(resultado, bits):
+    minimo, maximo = limite_com_sinal(bits)
+    return resultado < minimo or resultado > maximo
+
+
+def decimal_para_complemento_2(valor, bits):
+    mascara = (1 << bits) - 1
+    return format(valor & mascara, f"0{bits}b")
 
 
 def ler_bits():
@@ -23,13 +35,13 @@ def ler_bits():
 
 
 def ler_numero(nome, bits):
-    limite = limite_por_bits(bits)
+    minimo, maximo = limite_com_sinal(bits)
 
     while True:
-        valor = ler_inteiro(f"{nome} [0 a {limite}]: ")
-        if 0 <= valor <= limite:
+        valor = ler_inteiro(f"{nome} [{minimo} a {maximo}]: ")
+        if minimo <= valor <= maximo:
             return valor
-        print("Valor fora do intervalo.")
+        print("Valor fora do intervalo em complemento de 2.")
 
 
 def soma(a, b):
@@ -51,6 +63,9 @@ def divisao(a, b):
 
 
 def fatorial(n):
+    if n < 0:
+        return None
+
     resultado = 1
 
     for i in range(2, n + 1):
@@ -91,16 +106,23 @@ def executar_operacao(op, a, b=None):
     return None
 
 
-def mostrar_resultado(resultado):
+def mostrar_resultado(resultado, bits, op):
     if resultado is None:
-        print("Erro: divisão por zero.")
-    else:
-        print("Decimal:", resultado)
-
-        if resultado < 0:
-            print("Binário:", "-" + bin(abs(resultado))[2:])
+        if op == "4":
+            print("Erro: fatorial de número negativo não é permitido.")
         else:
-            print("Binário:", bin(resultado)[2:])
+            print("Erro: divisão por zero.")
+        return
+
+    minimo, maximo = limite_com_sinal(bits)
+    binario = decimal_para_complemento_2(resultado, bits)
+
+    print("Decimal:", resultado)
+    print(f"Binário em complemento de 2 ({bits} bits):", binario)
+
+    if tem_overflow(resultado, bits):
+        print(f"Aviso: overflow para {bits} bits em complemento de 2.")
+        print(f"Intervalo representável: {minimo} até {maximo}.")
 
 
 def menu_operacoes():
@@ -121,6 +143,12 @@ def modo_calculadora(bits_fixos=None):
     else:
         bits = bits_fixos
 
+    minimo, maximo = limite_com_sinal(bits)
+
+    print()
+    print(f"Modo {bits} bits em complemento de 2")
+    print(f"Entradas permitidas: {minimo} até {maximo}")
+
     while True:
         op = menu_operacoes()
 
@@ -139,15 +167,16 @@ def modo_calculadora(bits_fixos=None):
 
         resultado = executar_operacao(op, a, b)
 
+        print()
         print(nome_operacao(op))
-        mostrar_resultado(resultado)
+        mostrar_resultado(resultado, bits, op)
 
 
 def benchmark_operacao(op, bits, repeticoes):
-    limite = limite_por_bits(bits)
+    minimo, maximo = limite_com_sinal(bits)
 
-    a = limite
-    b = limite - 1
+    a = maximo
+    b = maximo - 1
 
     if b == 0:
         b = 1
