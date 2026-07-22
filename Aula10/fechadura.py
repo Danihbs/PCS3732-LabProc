@@ -8,7 +8,7 @@ from RPLCD.i2c import CharLCD
 
 # Modos:
 # "teclado", "lcd", "buzzer", "sensor" ou "completo"
-MODO = "teclado"
+MODO = "completo"
 
 SENHA_CORRETA = "1234"
 
@@ -22,7 +22,7 @@ DISTANCIA_FECHADA = 10.0  # cm
 
 # Teclado matricial 4x4
 LINHAS = [5, 6, 13, 19]
-COLUNAS = [26, 21, 20, 16]
+COLUNAS = [12, 16, 20, 21]
 
 TECLAS = [
     ["1", "2", "3", "A"],
@@ -32,11 +32,11 @@ TECLAS = [
 ]
 
 # Buzzer
-BUZZER = 12
+BUZZER = 18
 
 # Sensor ultrassonico HC-SR04
-TRIG = 14
-ECHO = 15
+TRIG = 23
+ECHO = 24
 
 # LCD I2C
 ENDERECO_LCD = 0x27
@@ -90,33 +90,12 @@ def iniciar_lcd():
 
 
 def escrever_lcd(linha1, linha2=""):
+    lcd.clear()
 
-    # A escrita I2C pode falhar esporadicamente (Errno 121 Remote I/O error),
-    # principalmente com o buzzer/sensor gerando ruido no barramento.
-    # Tenta algumas vezes e, se preciso, reinicializa o display.
-    for tentativa in range(3):
+    lcd.write_string(linha1[:16])
 
-        try:
-
-            lcd.clear()
-
-            lcd.write_string(linha1[:16])
-
-            lcd.cursor_pos = (1, 0)
-            lcd.write_string(linha2[:16])
-
-            return
-
-        except OSError:
-
-            time.sleep(0.05)
-
-            try:
-                iniciar_lcd()
-            except OSError:
-                pass
-
-    print("Falha ao escrever no LCD apos varias tentativas")
+    lcd.cursor_pos = (1, 0)
+    lcd.write_string(linha2[:16])
 
 
 # ==========================================================
