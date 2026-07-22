@@ -90,12 +90,33 @@ def iniciar_lcd():
 
 
 def escrever_lcd(linha1, linha2=""):
-    lcd.clear()
 
-    lcd.write_string(linha1[:16])
+    # A escrita I2C pode falhar esporadicamente (Errno 121 Remote I/O error),
+    # principalmente com o buzzer/sensor gerando ruido no barramento.
+    # Tenta algumas vezes e, se preciso, reinicializa o display.
+    for tentativa in range(3):
 
-    lcd.cursor_pos = (1, 0)
-    lcd.write_string(linha2[:16])
+        try:
+
+            lcd.clear()
+
+            lcd.write_string(linha1[:16])
+
+            lcd.cursor_pos = (1, 0)
+            lcd.write_string(linha2[:16])
+
+            return
+
+        except OSError:
+
+            time.sleep(0.05)
+
+            try:
+                iniciar_lcd()
+            except OSError:
+                pass
+
+    print("Falha ao escrever no LCD apos varias tentativas")
 
 
 # ==========================================================
